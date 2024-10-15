@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Lumen Workspace</title>
+</head>
+<body>
+    <div class="container">
+        <div class="toolbar">
+            <button class="icon" onclick="formatText('bold')" title="Bold">B</button>
+            <button class="icon" onclick="formatText('italic')" title="Italic">I</button>
+            <button class="icon" onclick="formatText('underline')" title="Underline">U</button>
+            <select onchange="changeFontFamily(this.value)">
+                <option value="">Font</option>
+                <option value="Arial">Arial</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+            </select>
+            <select onchange="changeFontSize(this.value)">
+                <option value="">Size</option>
+                <option value="1">Small</option>
+                <option value="3">Medium</option>
+                <option value="5">Large</option>
+            </select>
+            <button class="icon" onclick="changeFontColor()" title="Text Color">A</button>
+            <button class="icon" onclick="highlightText()" title="Highlight">H</button>
+            <button class="icon" onclick="applyStyle('heading1')" title="Heading 1">H1</button>
+            <button class="icon" onclick="applyStyle('heading2')" title="Heading 2">H2</button>
+            <button class="icon" onclick="createTable()" title="Insert Table">📊</button>
+            <button class="icon" onclick="document.getElementById('imageInput').click()" title="Insert Image">🖼️</button>
+            <button class="icon" onclick="insertLink()" title="Insert Link">🔗</button>
+            <button class="icon" onclick="undo()" title="Undo">↺</button>
+            <button class="icon" onclick="redo()" title="Redo">↻</button>
+            <button class="icon" onclick="printDocument()" title="Print">🖨️</button>
+            <button class="icon" onclick="saveToCloud()" title="Save to Cloud">☁️</button>
+            <button class="icon" onclick="generateTOC()" title="Table of Contents">📚</button>
+            <button id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+        </div>
+        <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+        <div class="main-content">
+            <div class="sidebar" id="sidebar">
+                <h3>Insert</h3>
+                <button class="icon" onclick="document.getElementById('imageInput').click()" title="Insert Image">🖼️</button>
+                <button class="icon" onclick="insertTable()" title="Insert Table">📊</button>
+                <button class="icon" onclick="insertShape()" title="Insert Shape">🔲</button>
+                <button class="icon" onclick="insertHyperlink()" title="Insert Link">🔗</button>
+                <button class="icon" onclick="insertSymbol()" title="Insert Symbol">⚙️</button>
+                <button class="icon" onclick="insertMedia()" title="Insert Media">🎥</button>
+                <button class="icon" onclick="insertComment()" title="Add Comment">💬</button>
+                <button class="icon" onclick="startDictation()" title="Dictate">🎤</button>
+            </div>
+            <div class="document-area" id="documentArea" contenteditable="true">
+                <p>Your document starts here...</p>
+            </div>
+            <div class="outline-view" id="outlineView">
+                <h3>Outline</h3>
+                <ul id="outlineList">
+                    <!-- Outline items will be dynamically generated -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Toggle dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Handle image upload
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    document.getElementById('documentArea').appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
